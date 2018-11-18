@@ -1,0 +1,34 @@
+{
+  "name": "get-buffer",
+  "version": "1.0.1",
+  "description": "Packaget for getting buffers from different inputs",
+  "main": "index.js",
+  "typings": "index.d.ts",
+  "scripts": {
+    "test": "mocha ./test/unittest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emilsivervik/get-buffer.git"
+  },
+  "keywords": [
+    "get",
+    "buffer",
+    "stream",
+    "filesystem",
+    "url",
+    "http"
+  ],
+  "author": "Emil Sivervik",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/emilsivervik/get-buffer/issues"
+  },
+  "homepage": "https://github.com/emilsivervik/get-buffer#readme",
+  "dependencies": {
+    "read-chunk": "^3.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
