@@ -16,8 +16,10 @@
     "buffer",
     "stream",
     "filesystem",
-    "url",
-    "http"
+    "readstream",
+    "path",
+    "read buffer",
+    "buffer limit"
   ],
   "author": "Emil Sivervik",
   "license": "MIT",
