@@ -8,21 +8,17 @@
 ## Usage
 
 ``` js
-getBuffer.fromPath('./test.png', 4100)
-.then(buffer => {
-    console.error(buffer);
-})
-.catch(err => {
-    console.error(err);
-})
+const getBuffer = require('get-buffer');
+const fs = require('fs');
+const stream = fs.createReadStream('./test.png');
 
-getBuffer.fromPath('./test.png', 4100, (err, buffer) => {
-    if(err) {
-        console.error(err);
-    }else{
-        console.log(buffer);
-    }
-})
+getBuffer.fromStream(stream, 4100)
+.then(buffer => console.error(buffer))
+.catch(err => console.error(err))
+
+getBuffer.fromPath('./test.png', 4100)
+.then(buffer => console.error(buffer))
+.catch(err => console.error(err))
 
 try{
     const buffer = getBuffer.fromPathSync('./test.png', 4100);
@@ -34,8 +30,11 @@ try{
 
 ## API
 
-### fromPath(filePath: string, callback: function)
-Returns `Buffer` with the same size as the file.
+###### fromStream(stream: `ReadStream`, bufferSize: `int` || `null`, callback: `function`)
+Reads a `Buffer` from a `ReadStream`, `bufferSize` could be provided to limit the Buffer into a maximum size. Returns either a `Promise` or a `function`(callback).
 
-### fromPath(filePath: string, bufferSize: int, callback: function)
-Returns a `Buffer` with the size of 4100 bytes.
+###### fromPath(filePath: `string`, bufferSize: `int` || `null`, callback: `function`)
+Reads a `Buffer` from a path, `bufferSize` could be provided to limit the Buffer into a maximum size. Returns either a `Promise` or a `function`(callback).
+
+###### fromPathSync(filePath: `string`, bufferSize: `int` || `null`)
+Reads a `Buffer` from a path, `bufferSize` could be provided to limit the Buffer into a maximum size. Returns synchronously.
