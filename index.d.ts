@@ -1,0 +1,54 @@
+// Type definitions for get-buffer v1.0.0
+// Project: https://github.com/emilsivervik/get-buffer
+// Definitions by: emilsivervik <https://github.com/emilsivervik>
+
+/// <reference types="node" />
+
+export = GetBuffer;
+
+declare namespace GetBuffer {
+    type Callback = (error: any, buffer: Buffer) => void;
+
+    /**
+     * Asynchronous: Reads the specified file into a Buffer. Returns a Promise<Buffer>.
+     * @param {string} filePath The path to the file.
+     * @return {Promise<Buffer>} Returns a Promise<Buffer>.
+     */
+    function fromPath(filePath: string): Promise<Buffer>
+    /**
+     * Asynchronous: Reads the specified file into a Buffer. Returns a callback function<Buffer>.
+     * @param {string} filePath The path to the file.
+     * @param {void} callback The function to return.
+     * @return {function} Returns a callback function.
+     */
+    function fromPath(filePath: string, callback: Callback);
+    /**
+     * Asynchronous: Reads the specified file into a Buffer, the size of the returning Buffer can be fixed with 2th parameter. Returns a Promise<Buffer>.
+     * @param {string} filePath The path to the file.
+     * @param {number} bufferLength The size of the Buffer to return.
+     * @return {Promise<Buffer>} Returns a Promise<Buffer>.
+     */
+    function fromPath(filePath: string, bufferLength: number): Promise<Buffer>;
+    /**
+     * Asynchronous: Reads the specified file into a Buffer, the size of the returning Buffer can be fixed with 2th parameter. Returns a callback function<Buffer>.
+     * @param {string} filePath The path to the file.
+     * @param {number} bufferLength The size of the Buffer to return.
+     * @param {function} callback The function to return.
+     * @return {function} Returns a callback function.
+     */
+    function fromPath(filePath: string, bufferLength: number, callback: Callback);
+
+    /**
+     * Synchronous: Reads the specified file into a Buffer. Returns a Buffer.
+     * @param {string} filePath The path to the file.
+     * @return {Buffer} Returns a Buffer.
+     */
+    function fromPathSync(filePath: string);
+    /**
+     * Synchronous: Reads the specified file into a Buffer, the size of the returning Buffer can be fixed with 2th parameter. Returns a Buffer
+     * @param {string} filePath The path to the file.
+     * @param {number} bufferLength The size of the Buffer to return.
+     * @return {Buffer} Returns a Buffer.
+     */
+    function fromPathSync(filePath: string, bufferLength: number);
+}
