@@ -1,7 +1,7 @@
 {
   "name": "get-buffer",
   "version": "1.1.2",
-  "description": "Packaget for getting buffers from different inputs",
+  "description": "Package for getting Buffers from Streams and Files with maximum size input.",
   "main": "index.js",
   "typings": "index.d.ts",
   "scripts": {
