@@ -12,47 +12,18 @@ declare namespace GetBuffer {
     type Callback = (error: any, buffer: Buffer) => void;
 
     /**
-     * Asynchronous: Reads the specified file into a Buffer. Returns a Promise<Buffer>.
-     * @param {string} filePath The path to the file.
-     * @return {Promise<Buffer>} Returns a Promise<Buffer>.
-     */
-    function fromPath(filePath: string): Promise<Buffer>
-    /**
-     * Asynchronous: Reads the specified file into a Buffer. Returns a callback function<Buffer>.
-     * @param {string} filePath The path to the file.
-     * @param {void} callback The function to return.
-     * @return {function} Returns a callback function.
-     */
-    function fromPath(filePath: string, callback: Callback);
-    /**
-     * Asynchronous: Reads the specified file into a Buffer, the size of the returning Buffer can be fixed with 2th parameter. Returns a Promise<Buffer>.
-     * @param {string} filePath The path to the file.
-     * @param {number} bufferLength The size of the Buffer to return.
-     * @return {Promise<Buffer>} Returns a Promise<Buffer>.
-     */
-    function fromPath(filePath: string, bufferLength: number | null): Promise<Buffer>;
-    /**
-     * Asynchronous: Reads the specified file into a Buffer, the size of the returning Buffer can be fixed with 2th parameter. Returns a callback function<Buffer>.
-     * @param {string} filePath The path to the file.
-     * @param {number} bufferLength The size of the Buffer to return.
-     * @param {function} callback The function to return.
-     * @return {function} Returns a callback function.
-     */
-    function fromPath(filePath: string, bufferLength: number | null, callback: Callback);
-
-    /**
      * Synchronous: Reads the specified file into a Buffer. Returns a Buffer.
      * @param {string} filePath The path to the file.
      * @return {Buffer} Returns a Buffer.
      */
-    function fromPathSync(filePath: string);
+    function fromPath(filePath: string);
     /**
      * Synchronous: Reads the specified file into a Buffer, the size of the returning Buffer can be fixed with 2th parameter. Returns a Buffer
      * @param {string} filePath The path to the file.
      * @param {number} bufferLength The size of the Buffer to return.
      * @return {Buffer} Returns a Buffer.
      */
-    function fromPathSync(filePath: string, bufferLength: number | null);
+    function fromPath(filePath: string, bufferLength: number | null);
 
     /**
      * Asynchronous: Reads stream and returns a function<Buffer>.
@@ -84,4 +55,20 @@ declare namespace GetBuffer {
      * @return {function} Returns a callback function.
      */
     function fromStream(stream: ReadStream, bufferLength: number | nullßß, callback: Callback);
+
+    /**
+     * Synchronous: Reads ArrayByffer and returns a Buffer.
+     * Returning Buffer size can have a max size if bufferLength is passed. 
+     * @param {ArrayBuffer} Stream The stream to read Buffer from.
+     * @return {Buffer} Returns a Promise<Buffer>.
+     */
+    function fromArrayBuffer(stream: ReadStream): Buffer;
+    /**
+     * Synchronous: Reads ArrayByffer and returns a Buffer.
+     * Returning Buffer size can have a max size if bufferLength is passed. 
+     * @param {ArrayBuffer} Stream The stream to read Buffer from.
+     * @param {number} bufferLength The size of the Buffer to return.
+     * @return {Buffer} Returns a Promise<Buffer>.
+     */
+    function fromArrayBuffer(stream: ReadStream, bufferLength: number): Buffer;
 }
