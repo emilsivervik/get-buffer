@@ -21,6 +21,9 @@
     "read buffer",
     "buffer limit"
   ],
+  "files": [
+    "index.js"
+  ],
   "author": "Emil Sivervik",
   "license": "MIT",
   "bugs": {
