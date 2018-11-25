@@ -16,12 +16,8 @@ getBuffer.fromStream(stream, 4100)
 .then(buffer => console.error(buffer))
 .catch(err => console.error(err))
 
-getBuffer.fromPath('./test.png', 4100)
-.then(buffer => console.error(buffer))
-.catch(err => console.error(err))
-
 try{
-    const buffer = getBuffer.fromPathSync('./test.png', 4100);
+    const buffer = getBuffer.fromPath('./test.png', 4100);
     console.log(buffer)
 }catch(err){
     console.log(err);
@@ -30,11 +26,14 @@ try{
 
 ## API
 
-###### fromStream(stream: `ReadStream`, bufferSize: `int` || `null`, callback: `function`)
+###### fromStream(stream: `ReadStream`, callback: `function`)
+###### fromStream(stream: `ReadStream`, bufferSize: `int`, callback: `function`)
 Reads a `Buffer` from a `ReadStream`, `bufferSize` could be provided to limit the Buffer into a maximum size. Returns either a `Promise` or a `function`(callback).
 
-###### fromPath(filePath: `string`, bufferSize: `int` || `null`, callback: `function`)
-Reads a `Buffer` from a path, `bufferSize` could be provided to limit the Buffer into a maximum size. Returns either a `Promise` or a `function`(callback).
-
-###### fromPathSync(filePath: `string`, bufferSize: `int` || `null`)
+###### fromPath(filePath: `string`)
+###### fromPath(filePath: `string`, bufferSize: `int`)
 Reads a `Buffer` from a path, `bufferSize` could be provided to limit the Buffer into a maximum size. Returns synchronously.
+
+###### fromArrayBuffer(arrayBuffer: `ArrayBuffer`)
+###### fromArrayBuffer(arrayBuffer: `ArrayBuffer`, bufferSize: `int`)
+Reads a `Buffer` from a `ArrayBuffer`, `bufferSize` could be provided to limit the Buffer into a maximum size. Returns synchronously.
