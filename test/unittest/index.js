@@ -56,14 +56,17 @@ describe('get-buffer', function () {
     })
 
     describe('fromArrayBuffer', function () {
-        it('should return buffer from path', function (done) {
-            const arrayBuffer = new ArrayBuffer(8);
+        it('should return buffer from ArrayBuffer', function (done) {
+            const fileArrayBuffer = fs.readFileSync(testfile);
+            const arrayBuffer = new Uint8Array(fileArrayBuffer).buffer;
             const buff = getBuffer.fromArrayBuffer(arrayBuffer)
-            validate(buff, 8)
+            validate(buff, 102910)
             done()
         })
-        it('should return buffer with specific size', function (done) {
-            const buff = getBuffer.fromPath(testfile, 4100)
+        it('should return buffer from ArrayBuffer with specific size', function (done) {
+            const fileArrayBuffer = fs.readFileSync(testfile);
+            const arrayBuffer = new Uint8Array(fileArrayBuffer).buffer;
+            const buff = getBuffer.fromArrayBuffer(arrayBuffer, 4100)
             validate(buff, 4100)
             done()
         })
