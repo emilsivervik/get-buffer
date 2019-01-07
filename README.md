@@ -13,14 +13,14 @@ const fs = require('fs');
 const stream = fs.createReadStream('./test.png');
 
 getBuffer.fromStream(stream, 4100)
-.then(buffer => console.error(buffer))
+.then(buffer => console.log(buffer))
 .catch(err => console.error(err))
 
 try{
     const buffer = getBuffer.fromPath('./test.png', 4100);
     console.log(buffer)
 }catch(err){
-    console.log(err);
+    console.error(err);
 }
 ```
 
