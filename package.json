@@ -2,8 +2,8 @@
   "name": "get-buffer",
   "version": "1.2.6",
   "description": "Package for getting Buffers from Streams and Files with maximum size input.",
-  "main": "index.js",
-  "typings": "index.d.ts",
+  "main": "/.index.js",
+  "types": "/.index.d.ts",
   "scripts": {
     "test": "standard --fix & mocha ./test/unittest",
     "postversion": "git push && git push --tags"
@@ -21,9 +21,6 @@
     "path",
     "read buffer",
     "buffer limit"
-  ],
-  "files": [
-    "index.js"
   ],
   "author": "Emil Sivervik",
   "license": "MIT",
