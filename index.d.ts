@@ -1,5 +1,6 @@
 import { ReadStream } from "tty";
 
+// Type definitions for get-buffer v1.0.0
 // Project: https://github.com/emilsivervik/get-buffer
 // Definitions by: emilsivervik <https://github.com/emilsivervik>
 
