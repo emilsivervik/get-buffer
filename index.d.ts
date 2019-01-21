@@ -1,6 +1,5 @@
 import { ReadStream } from "tty";
 
-// Type definitions for get-buffer v1.0.0
 // Project: https://github.com/emilsivervik/get-buffer
 // Definitions by: emilsivervik <https://github.com/emilsivervik>
 
@@ -54,7 +53,7 @@ declare namespace GetBuffer {
      * @param {function} callback The callback function to return.
      * @return {function} Returns a callback function.
      */
-    function fromStream(stream: ReadStream, bufferLength: number | nullßß, callback: Callback);
+    function fromStream(stream: ReadStream, bufferLength: number | null, callback: Callback);
 
     /**
      * Synchronous: Reads ArrayByffer and returns a Buffer.
