@@ -47,7 +47,8 @@ describe('get-buffer', function () {
         })
         it('should return buffer from stream with specific size', function (done) {
             const fileStream = fs.createReadStream(testfile)
-            return getBuffer.fromStream(fileStream, 4100, function (err, buff) {
+            getBuffer.fromStream(fileStream, 4100, function (err, buff) {
+                fileStream.destroy();
                 if (err) return done(err)
                 validate(buff, 4100)
                 done()

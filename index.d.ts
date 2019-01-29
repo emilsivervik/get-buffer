@@ -41,6 +41,7 @@ declare namespace GetBuffer {
     function fromStream(stream: ReadStream, callback: Callback);
     /**
      * Asynchronous: Reads stream and returns a function<Buffer>.
+     * Stream is not automatically paused or destroyed when Buffer is returned.
      * @param {ReadStream} Stream The stream to read Buffer from.
      * @param {number} bufferLength The size of the Buffer to return.
      * @return {Buffer} Buffer
@@ -49,6 +50,7 @@ declare namespace GetBuffer {
     /**
      * Asynchronous: Reads stream and returns a function<Buffer>.
      * Returning Buffer size can have a max size if bufferLength is passed.
+     * Stream is not automatically paused or destroyed when Buffer is returned.
      * @param {ReadStream} Stream The stream to read Buffer from.
      * @param {number} bufferLength The size of the Buffer to return.
      * @param {function} callback The callback function to return.

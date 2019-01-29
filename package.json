@@ -5,7 +5,7 @@
   "main": "index.js",
   "typings": "index.d.ts",
   "scripts": {
-    "test": "standard --fix & mocha ./test/unittest",
+    "test": "standard --fix & ./node_modules/.bin/mocha ./test/unittest",
     "postversion": "git push && git push --tags"
   },
   "repository": {
