@@ -1,4 +1,4 @@
-import { ReadStream } from "tty";
+import { Readable } from "stream";
 
 // Type definitions for get-buffer v1.0.0
 // Project: https://github.com/emilsivervik/get-buffer
@@ -28,35 +28,35 @@ declare namespace GetBuffer {
     /**
      * Asynchronous: Reads stream and returns a function<Buffer>.
      * Returning Buffer size can have a max size if bufferLength is passed. 
-     * @param {ReadStream} Stream The stream to read Buffer from.
+     * @param {Readable} Stream The stream to read Buffer from.
      * @return {Buffer} Returns a Promise<Buffer>.
      */
-    function fromStream(stream: ReadStream): Promise<Buffer>;
+    function fromStream(stream: Readable): Promise<Buffer>;
     /**
      * Asynchronous: Reads stream and returns a function<Buffer>.
-     * @param {ReadStream} Stream The stream to read Buffer from.
+     * @param {Readable} Stream The stream to read Buffer from.
      * @param {function} callback The callback function to return.
      * @return {function} Returns a callback function.
      */
-    function fromStream(stream: ReadStream, callback: Callback);
+    function fromStream(stream: Readable, callback: Callback);
     /**
      * Asynchronous: Reads stream and returns a function<Buffer>.
      * Stream is not automatically paused or destroyed when Buffer is returned.
-     * @param {ReadStream} Stream The stream to read Buffer from.
+     * @param {Readable} Stream The stream to read Buffer from.
      * @param {number} bufferLength The size of the Buffer to return.
      * @return {Buffer} Buffer
      */
-    function fromStream(stream: ReadStream, bufferLength: number | null): Promise<Buffer>;
+    function fromStream(stream: Readable, bufferLength: number | null): Promise<Buffer>;
     /**
      * Asynchronous: Reads stream and returns a function<Buffer>.
      * Returning Buffer size can have a max size if bufferLength is passed.
      * Stream is not automatically paused or destroyed when Buffer is returned.
-     * @param {ReadStream} Stream The stream to read Buffer from.
+     * @param {Readable} Stream The stream to read Buffer from.
      * @param {number} bufferLength The size of the Buffer to return.
      * @param {function} callback The callback function to return.
      * @return {function} Returns a callback function.
      */
-    function fromStream(stream: ReadStream, bufferLength: number | null, callback: Callback);
+    function fromStream(stream: Readable, bufferLength: number | null, callback: Callback);
 
     /**
      * Synchronous: Reads ArrayByffer and returns a Buffer.
@@ -64,7 +64,7 @@ declare namespace GetBuffer {
      * @param {ArrayBuffer} Stream The stream to read Buffer from.
      * @return {Buffer} Returns a Promise<Buffer>.
      */
-    function fromArrayBuffer(stream: ReadStream): Buffer;
+    function fromArrayBuffer(stream: Readable): Buffer;
     /**
      * Synchronous: Reads ArrayByffer and returns a Buffer.
      * Returning Buffer size can have a max size if bufferLength is passed. 
@@ -72,5 +72,5 @@ declare namespace GetBuffer {
      * @param {number} bufferLength The size of the Buffer to return.
      * @return {Buffer} Returns a Promise<Buffer>.
      */
-    function fromArrayBuffer(stream: ReadStream, bufferLength: number): Buffer;
+    function fromArrayBuffer(stream: Readable, bufferLength: number): Buffer;
 }
