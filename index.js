@@ -23,11 +23,6 @@ const fromStream = (arg1, arg2 = 0, arg3) => {
     if (bufferSize && !Number.isInteger(bufferSize)) reject(new Error('bufferSize is not of type Number'))
     let buffer = Buffer.alloc(0)
     stream
-      .once('data', data => {
-        if (bufferSize && (data.length < bufferSize)) {
-          reject(new Error('Incomming stream buffer is less then set bufferSize'))
-        }
-      })
       .on('data', data => {
         const size = Number((buffer.length + data.length) - bufferSize)
         const newBuff = bufferSize <= 0 ? data : data.slice(0, data.length - size)
