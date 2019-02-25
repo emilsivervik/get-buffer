@@ -1,7 +1,8 @@
 const getBuffer = require('../../index')
 const path = require('path')
 const fileName = 'testfile.png'
-const testfile = path.join(__dirname, fileName)
+const testFile = path.join(__dirname, fileName)
+const testFileSize = 102910;
 const fs = require('fs')
 
 const validate = (iBuffer, length) => {
@@ -12,64 +13,126 @@ const validate = (iBuffer, length) => {
 describe('get-buffer', function () {
     describe('fromPath', function () {
         it('should return buffer from path', function (done) {
-            const buff = getBuffer.fromPath(testfile);
-            validate(buff, 102910);
+            const buff = getBuffer.fromPath(testFile);
+            validate(buff, testFileSize);
             done()
         })
         it('should return buffer with specific size', function (done) {
-            const buff = getBuffer.fromPath(testfile, 4100)
+            const buff = getBuffer.fromPath(testFile, 4100)
             validate(buff, 4100);
             done()
         })
+        it("Should throw error 'Path is not a valid path.'", function (done) {
+            try {
+                const buff = getBuffer.fromPath('lel', 'asd')
+                done(new Error("Should throw error 'Path is not a valid path.'"));
+            } catch (err) {
+                done()
+            }
+        })
+        it("Should throw error 'bufferSize is not of type Number.'", function (done) {
+            try {
+                const buff = getBuffer.fromPath(testFile, 'asd')
+                done(new Error("Should throw error 'bufferSize is not of type Number.'"));
+            } catch (err) {
+                done()
+            }
+        })
     })
 
-    describe('fromStream, Promise', function () {
+    describe('fromStream', function () {
+        /* Promise testing */
         it('should return buffer from path', function () {
-            const fileS = fs.createReadStream(testfile)
-            return getBuffer.fromStream(fileS)
-                .then((buff) => validate(buff, 102910))
+            const fileStream = fs.createReadStream(testFile)
+            return getBuffer.fromStream(fileStream)
+                .then((buff) => validate(buff, testFileSize))
         })
         it('should return buffer with specific size', function () {
-            const fileS = fs.createReadStream(testfile)
-            return getBuffer.fromStream(fileS, 4100)
+            const fileStream = fs.createReadStream(testFile)
+            return getBuffer.fromStream(fileStream, 4100)
                 .then((buff) => validate(buff, 4100))
         })
-    })
-
-    describe('fromStream, Callback', function () {
+        it('should throw error when not stream as input', function (done) {
+            const fileStream = fs.createReadStream(testFile)
+            getBuffer.fromStream(fileStream, testFileSize + 100)
+                .then((buff) => {
+                    done(new Error("Should throw error 'Input streams buffer is less then required size.'"));
+                })
+                .catch(err => {
+                    done();
+                })
+        })
+        /* Callback testing */
         it('should return buffer from stream by callback', function (done) {
-            const fileStream = fs.createReadStream(testfile)
+            const fileStream = fs.createReadStream(testFile)
             getBuffer.fromStream(fileStream, function (err, buff) {
                 if (err) return done(err)
-                validate(buff, 102910)
+                validate(buff, testFileSize)
                 done()
             })
         })
         it('should return buffer from stream with specific size', function (done) {
-            const fileStream = fs.createReadStream(testfile)
+            const fileStream = fs.createReadStream(testFile)
             getBuffer.fromStream(fileStream, 4100, function (err, buff) {
-                fileStream.destroy();
                 if (err) return done(err)
                 validate(buff, 4100)
                 done()
             })
         })
+        it("Should throw error 'Input streams buffer is less then required size.'", function (done) {
+            const fileStream = fs.createReadStream(testFile)
+            getBuffer.fromStream(fileStream, testFileSize + 100)
+                .then((buff) => {
+                    done(new Error("Should throw error 'Input streams buffer is less then required size.'"));
+                })
+                .catch(err => {
+                    done();
+                })
+        })
+        it("Should throw error 'Input is not a stream.'", function (done) {
+            const fileStream = fs.createReadStream(testFile)
+            getBuffer.fromStream('ad')
+                .then((buff) => {
+                    done(new Error("Should throw error 'Input is not a stream.'"));
+                })
+                .catch(err => {
+                    done();
+                })
+        })
+        it("Should throw error 'bufferSize is not of type Number.'", function (done) {
+            const fileStream = fs.createReadStream(testFile)
+            getBuffer.fromStream('ad')
+                .then((buff) => {
+                    done(new Error("Should throw error 'bufferSize is not of type Number.'"));
+                })
+                .catch(err => {
+                    done();
+                })
+        })
     })
 
     describe('fromArrayBuffer', function () {
         it('should return buffer from ArrayBuffer', function (done) {
-            const fileArrayBuffer = fs.readFileSync(testfile);
+            const fileArrayBuffer = fs.readFileSync(testFile);
             const arrayBuffer = new Uint8Array(fileArrayBuffer).buffer;
             const buff = getBuffer.fromArrayBuffer(arrayBuffer)
-            validate(buff, 102910)
+            validate(buff, testFileSize)
             done()
         })
         it('should return buffer from ArrayBuffer with specific size', function (done) {
-            const fileArrayBuffer = fs.readFileSync(testfile);
+            const fileArrayBuffer = fs.readFileSync(testFile);
             const arrayBuffer = new Uint8Array(fileArrayBuffer).buffer;
             const buff = getBuffer.fromArrayBuffer(arrayBuffer, 4100)
             validate(buff, 4100)
             done()
+        })
+        it("Should throw error 'Input is not an ArrayBuffer.'", function (done) {
+            try {
+                const buff = getBuffer.fromArrayBuffer(1)
+                done(new Error("Should throw error 'Input is not an ArrayBuffer.'"));
+            } catch (err) {
+                done();
+            }
         })
     })
 })
