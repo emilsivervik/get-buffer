@@ -7,8 +7,8 @@ const { basename } = require('path')
 const isArrayBuffer = require('is-array-buffer')
 
 const fromPath = (path, bufferSize) => {
-  if (path === basename(path)) new Error('Path is not a valid path')
-  if (bufferSize && !Number.isInteger(bufferSize)) new Error('bufferSize is not of type Number')
+  if (path === basename(path)) Error('Path is not a valid path.')
+  if (bufferSize && !Number.isInteger(bufferSize)) Error('bufferSize is not of type Number.')
   if (!bufferSize) return readFileSync(path)
   return sync(path, 0, bufferSize)
 }
@@ -19,25 +19,26 @@ const fromStream = (arg1, arg2 = 0, arg3) => {
   const callback = typeof arg2 === 'function' ? arg2 : arg3
 
   const func = (resolve, reject) => {
-    if (!(stream instanceof Stream)) reject(new Error('Input is not a stream'))
-    if (bufferSize && !Number.isInteger(bufferSize)) reject(new Error('bufferSize is not of type Number'))
+    if (!(stream instanceof Stream)) reject(Error('Input is not a stream.'))
+    if (bufferSize && !Number.isInteger(bufferSize)) reject(Error('bufferSize is not of type Number.'))
     let buffer = Buffer.alloc(0)
+    let sent = false
     stream
-      .once('data', data => {
-        if (bufferSize && (data.length < bufferSize)) {
-          reject(new Error('Incomming stream buffer is less then set bufferSize'))
-        }
-      })
-      .on('data', data => {
+      .on('error', (err) => reject(err))
+      .on('close', () => resolve(buffer))
+      .on('readable', () => {
+        let data = stream.read()
+        if (data == null) { return }
         const size = Number((buffer.length + data.length) - bufferSize)
         const newBuff = bufferSize <= 0 ? data : data.slice(0, data.length - size)
         buffer = Buffer.concat([buffer, newBuff])
-        if (!!bufferSize && buffer.length >= bufferSize) {
-          return resolve(buffer)
+        if (!!bufferSize && !sent && buffer.length >= bufferSize) {
+          return
+        }
+        if (bufferSize && (buffer.length < bufferSize)) {
+          return reject(Error('Input streams buffer is less then required size.'))
         }
       })
-      .on('end', () => resolve(buffer))
-      .on('error', err => reject(err))
   }
   return typeof callback === 'function'
     ? func(callback.bind(null, undefined), callback)
@@ -45,8 +46,8 @@ const fromStream = (arg1, arg2 = 0, arg3) => {
 }
 
 const fromArrayBuffer = (arrayBuffer, bufferSize) => {
-  if (!isArrayBuffer(arrayBuffer)) throw new Error('Input is not an ArrayBuffer')
-  if (bufferSize && !Number.isInteger(bufferSize)) new Error('bufferSize is not of type Number')
+  if (!isArrayBuffer(arrayBuffer)) throw Error('Input is not an ArrayBuffer')
+  if (bufferSize && !Number.isInteger(bufferSize)) Error('bufferSize is not of type Number')
   return Buffer.from(arrayBuffer, 0, bufferSize || arrayBuffer.length)
 }
 
