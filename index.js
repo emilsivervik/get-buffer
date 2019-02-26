@@ -28,6 +28,9 @@ const fromStream = (arg1, arg2 = 0, arg3) => {
       .on('close', () => { if (!sent) resolve(buffer) })
       .on('readable', () => {
         let data = stream.read()
+        if (!data && bufferSize && (buffer.length < bufferSize)) {
+          return reject(Error('Input streams buffer is less then required size.'))
+        }
         if (data == null) { return }
         const size = Number((buffer.length + data.length) - bufferSize)
         const newBuff = bufferSize <= 0 ? data : data.slice(0, data.length - size)
@@ -35,9 +38,6 @@ const fromStream = (arg1, arg2 = 0, arg3) => {
         if (!!bufferSize && !sent && buffer.length >= bufferSize) {
           sent = true
           return resolve(buffer)
-        }
-        if (bufferSize && (buffer.length < bufferSize)) {
-          return reject(Error('Input streams buffer is less then required size.'))
         }
       })
   }

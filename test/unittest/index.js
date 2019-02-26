@@ -48,7 +48,7 @@ describe('get-buffer', function () {
                 .then((buff) => validate(buff, testFileSize))
         })
         it('should return buffer with specific size', function () {
-            const fileStream = fs.createReadStream(testFile)
+            const fileStream = fs.createReadStream(testFile, { highWaterMark : 10})
             return getBuffer.fromStream(fileStream, 4100)
                 .then((buff) => validate(buff, 4100))
         })
@@ -64,7 +64,7 @@ describe('get-buffer', function () {
         })
         /* Callback testing */
         it('should return buffer from stream by callback', function (done) {
-            const fileStream = fs.createReadStream(testFile)
+            const fileStream = fs.createReadStream(testFile, { highWaterMark : 10})
             getBuffer.fromStream(fileStream, function (err, buff) {
                 if (err) return done(err)
                 validate(buff, testFileSize)
@@ -90,7 +90,7 @@ describe('get-buffer', function () {
                 })
         })
         it("Should throw error 'Input is not a stream.'", function (done) {
-            const fileStream = fs.createReadStream(testFile)
+            const fileStream = fs.createReadStream(testFile, { highWaterMark : 10})
             getBuffer.fromStream('ad')
                 .then((buff) => {
                     done(new Error("Should throw error 'Input is not a stream.'"));
