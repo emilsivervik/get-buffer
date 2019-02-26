@@ -25,7 +25,7 @@ const fromStream = (arg1, arg2 = 0, arg3) => {
     let sent = false
     stream
       .on('error', (err) => reject(err))
-      .on('close', () => resolve(buffer))
+      .on('close', () => { if (!sent) resolve(buffer) })
       .on('readable', () => {
         let data = stream.read()
         if (data == null) { return }
@@ -33,7 +33,8 @@ const fromStream = (arg1, arg2 = 0, arg3) => {
         const newBuff = bufferSize <= 0 ? data : data.slice(0, data.length - size)
         buffer = Buffer.concat([buffer, newBuff])
         if (!!bufferSize && !sent && buffer.length >= bufferSize) {
-          return
+          sent = true
+          return resolve(buffer)
         }
         if (bufferSize && (buffer.length < bufferSize)) {
           return reject(Error('Input streams buffer is less then required size.'))
