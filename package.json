@@ -1,6 +1,6 @@
 {
   "name": "get-buffer",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "description": "Package for getting Buffers from Streams and Files with maximum size input.",
   "main": "index.js",
   "typings": "index.d.ts",
@@ -38,7 +38,8 @@
     "read-chunk": "^3.0.0"
   },
   "devDependencies": {
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "standard": "^12.0.1"
   },
   "standard": {
     "ignore": [
