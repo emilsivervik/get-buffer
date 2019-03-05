@@ -27,9 +27,9 @@ try{
 
 ## API
 
-###### fromStream(stream: `ReadStream`, callback: `function`)
-###### fromStream(stream: `ReadStream`, bufferSize: `int`, callback: `function`)
-Reads a `Buffer` from a `ReadStream`, `bufferSize` could be provided to limit the Buffer into a maximum size. Returns either a `Promise` or a `function`(callback).
+###### fromStream(stream: `Readable`, callback: `function`)
+###### fromStream(stream: `Readable`, bufferSize: `int`, callback: `function`)
+Reads a `Buffer` from a `Readable`, `bufferSize` could be provided to limit the Buffer into a maximum size. Returns either a `Promise` or a `function`(callback).
 
 ###### fromPath(filePath: `string`)
 ###### fromPath(filePath: `string`, bufferSize: `int`)
