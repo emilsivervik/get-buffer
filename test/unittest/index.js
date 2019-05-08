@@ -1,9 +1,13 @@
 const getBuffer = require('../../index')
 const path = require('path')
+const fs = require('fs')
 const fileName = 'testfile.png'
 const testFile = path.join(__dirname, fileName)
-const testFileSize = 102910;
-const fs = require('fs')
+const testFileSize = fs.statSync(testFile).size;
+
+const smallFileName = 'vit.png';
+const smallTestFile = path.join(__dirname, smallFileName)
+const smallTestFileSize = fs.statSync(smallTestFile).size;
 
 const validate = (iBuffer, length) => {
     if (!Buffer.isBuffer(iBuffer)) throw new Error('Response is not a buffer.')
@@ -42,6 +46,11 @@ describe('get-buffer', function () {
 
     describe('fromStream', function () {
         /* Promise testing */
+        it('should return buffer if smaller then watermark', function () {
+            const fileStream = fs.createReadStream(smallTestFile)
+            return getBuffer.fromStream(fileStream)
+                .then((buff) => validate(buff, smallTestFileSize))
+        })
         it('should return buffer from path', function () {
             const fileStream = fs.createReadStream(testFile)
             return getBuffer.fromStream(fileStream)
