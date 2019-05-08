@@ -28,7 +28,7 @@ const fromStream = (arg1, arg2 = 0, arg3) => {
       .on('close', () => { if (!sent) resolve(buffer) })
       .on('readable', () => {
         let data = stream.read()
-        if (!data && bufferSize && (buffer.length < bufferSize)) {
+        if (!data && !!bufferSize && (buffer.length < bufferSize)) {
           return reject(Error('Input streams buffer is less then required size.'))
         }
         if (data == null) { return }
@@ -39,7 +39,7 @@ const fromStream = (arg1, arg2 = 0, arg3) => {
           sent = true
           return resolve(buffer)
         }
-        if (!sent && buffer.length < stream.readableHighWaterMark) {
+        if (!data && !sent && newBuff.length < stream.readableHighWaterMark) {
           sent = true
           return resolve(buffer)
         }
