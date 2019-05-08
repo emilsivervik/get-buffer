@@ -1,6 +1,8 @@
-const getBuffer = require('../../index')
 const path = require('path')
 const fs = require('fs')
+const assert = require('assert')
+
+const getBuffer = require('../../index')
 const fileName = 'testfile.png'
 const testFile = path.join(__dirname, fileName)
 const testFileSize = fs.statSync(testFile).size;
@@ -63,7 +65,7 @@ describe('get-buffer', function () {
         })
         it('should throw error when not stream as input', function (done) {
             const fileStream = fs.createReadStream(testFile)
-            getBuffer.fromStream(fileStream, testFileSize + 100)
+            getBuffer.fromStream({}, testFileSize + 100)
                 .then((buff) => {
                     done(new Error("Should throw error 'Input streams buffer is less then required size.'"));
                 })
@@ -91,32 +93,19 @@ describe('get-buffer', function () {
         it("Should throw error 'Input streams buffer is less then required size.'", function (done) {
             const fileStream = fs.createReadStream(testFile)
             getBuffer.fromStream(fileStream, testFileSize + 100)
-                .then((buff) => {
-                    done(new Error("Should throw error 'Input streams buffer is less then required size.'"));
-                })
-                .catch(err => {
-                    done();
-                })
+                .then((buff) => done(new Error("Should throw error 'Input streams buffer is less then required size.'")))
+                .catch(err => done(assert.equal(err.message, "Input streams buffer is less then required size.")))
         })
         it("Should throw error 'Input is not a stream.'", function (done) {
-            const fileStream = fs.createReadStream(testFile, { highWaterMark : 10})
             getBuffer.fromStream('ad')
-                .then((buff) => {
-                    done(new Error("Should throw error 'Input is not a stream.'"));
-                })
-                .catch(err => {
-                    done();
-                })
+                .then((buff) => done(new Error("Should throw error 'Input is not a stream.'")))
+                .catch(err => done(assert.equal(err.message, "Input is not a stream.")))
         })
         it("Should throw error 'bufferSize is not of type Number.'", function (done) {
             const fileStream = fs.createReadStream(testFile)
-            getBuffer.fromStream('ad')
-                .then((buff) => {
-                    done(new Error("Should throw error 'bufferSize is not of type Number.'"));
-                })
-                .catch(err => {
-                    done();
-                })
+            getBuffer.fromStream(fileStream, 'ad')
+                .then((buff) => done(new Error("Should throw error 'bufferSize is not of type Number.'")))
+                .catch(err => done(assert.equal(err.message, "bufferSize is not of type Number.")))
         })
     })
 
