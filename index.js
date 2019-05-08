@@ -39,6 +39,10 @@ const fromStream = (arg1, arg2 = 0, arg3) => {
           sent = true
           return resolve(buffer)
         }
+        if (!sent && buffer.length < stream.readableHighWaterMark) {
+          sent = true
+          return resolve(buffer)
+        }
       })
   }
   return typeof callback === 'function'
