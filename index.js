@@ -27,7 +27,7 @@ const fromStream = (arg1, arg2 = 0, arg3) => {
       .on('error', (err) => reject(err))
       .on('close', () => { if (!sent) resolve(buffer) })
       .on('readable', () => {
-        let data = stream.read()
+        const data = stream.read()
         if (!data && !!bufferSize && (buffer.length < bufferSize)) {
           return reject(Error('Input streams buffer is less then required size.'))
         }
